@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Mantevian/simonsaysbot/issues"
   },
-  "homepage": "https://github.com/Mantevian/simonsaysbot#readme"
+  "homepage": "https://github.com/Mantevian/simonsaysbot#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
 }
