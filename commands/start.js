@@ -5,6 +5,8 @@ const {
     RichEmbed
 } = discord;
 
+const {runGame} = require('../game.js');
+
 module.exports = {
     name: ['start', 'startgame', 'game', 'newgame', 'new'],
     type: 'all',
@@ -22,7 +24,7 @@ module.exports = {
         }
 
         //collect players
-        
+
         let startembed = new RichEmbed().setTitle("REACT TO THIS MESSAGE TO JOIN SIMON SAYS!")
         channel.send(startembed).then(async (msg) => {
             msg.react('🎲')
@@ -32,13 +34,14 @@ module.exports = {
             })
 
             msg.delete()
-            if(collected.size < 2){
+            /*if(collected.size < 2){
                 channel.send('**Game canceled!** Not enough players!')
                 return
-            }
+            }*/ //add this back in final release
             channel.send(`**Starting game with ${collected.size} players!**`)
 
-            //start game
+            runGame(channel, collected.array)
+            //make game mechanics in game.js
         })
 
 
