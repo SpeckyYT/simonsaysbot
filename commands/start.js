@@ -49,8 +49,5 @@ module.exports = {
             runGame(channel, players, client)
             //make game mechanics in game.js
         })
-
-
-
     }
 }
