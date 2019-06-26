@@ -1,47 +1,40 @@
 {
-    "token": "",
-    "fakeStarts": [
-        "Alright, ",
-        "Okay, ",
-        "Now ",
-        "Simoon says",
-        "Simmon says",
-        "Simone says",
-        "I say"
-    ],
-    "tasks": {
-        "say": [
-            "hello",
-            "hi",
-            "boom",
-            "beep boop",
-            "i love this bot"
+    "token": "NTkwMTcxMDkzMDMwMDEwOTMw.XQjB-A.SBg5EMoLb2TA_ANimyVU28ku-mo",
+    "prefix": "=",
+    "default_settings": {
+        "fakeStarts": [
+            "Alright, ",
+            "Okay, ",
+            "Now ",
+            "Simoon says",
+            "Simmon says",
+            "Simone says",
+            "I say"
         ],
-        "emoji": [
-            "diamond_shape_with_a_dot_inside",
-            "eight_spoked_asterisk",
-            "negative_squared_cross_mark",
-            "white_check_mark",
-            "globe_with_meridians"
-        ],
-        "reaction": [
-            "thumbs_up",
-        ],
-        "nickname": [
-            "simon",
-            "best person"
-        ],
-        "status": [
-            "online",
-            "idle",
-            "dnd",
-            "offline"
-        ],
-        "command": [
-            {
-                "command": "!rank",
-                "bot": "159985870458322944"
-            }
-        ]
+        "tasks": {
+            "say": [
+                "hello",
+                "hi",
+                "boom",
+                "beep boop",
+                "i love this bot",
+                ":diamond_shape_with_a_dot_inside:",
+                ":white_check_mark:",
+                ":globe_with_meridians:"
+            ],
+            "react": [
+                "thumbs_up"
+            ],
+            "nickname": [
+                "simon",
+                "best person"
+            ],
+            "status": [
+                "online",
+                "idle",
+                "dnd",
+                "offline"
+            ]
+        }
     }
 }

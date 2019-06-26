@@ -1,15 +1,10 @@
-const fakeStarts = [
-    'Ok,',
-    'Now,',
-    'Simone says'
-]
+var fs = require('fs');
 
-
-module.exports = function () {
-
-    let choice = getRandomInt(2)
+module.exports = function (guild_id) {
+    const config = fs.readFileSync(`./guilds/${guild_id}.js`);
+    let choice = getRandomInt(4)
     
-    if (choice == 0) {
+    if (choice != 0) {
         return ({
             string: 'Simon says',
             real: true
@@ -17,7 +12,7 @@ module.exports = function () {
     }
 
     return ({
-        string: fakeStarts[getRandomInt(fakeStarts.length)],
+        string: config.fakeStarts[getRandomInt(config.fakeStarts.length)],
         real: false
     })
 }

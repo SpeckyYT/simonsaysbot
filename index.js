@@ -8,7 +8,7 @@ const {
 
 const client = new Client();
 
-const config = JSON.parse(fs.readFileSync('config.js'));
+const config = JSON.parse(fs.readFileSync('config.json'));
 
 const prefix = config.prefix //idk
 
@@ -26,7 +26,7 @@ for (const file of commandFiles) {
     }
 }
 
-console.log(`Loaded ${commandFiles.length} commands and ${client.commands.array().length} aliases!`)
+console.log(`Loaded ${commandFiles.length} commands and ${client.commands.array().length} aliases!`);
 
 client.on('message', message => {
     let content = message.content
@@ -41,7 +41,7 @@ client.on('message', message => {
             cmd.execute(client, message, words)
         } catch (error) {
             message.channel.send("**ERROR: **" + error).then(msg => msg.delete(10000))
-            //console.log("**ERROR: **" + error)
+            console.log("**ERROR: **" + error)
         }
     }
 
@@ -49,6 +49,10 @@ client.on('message', message => {
 
 client.on('ready', () => {
     console.log('online!')
+})
+
+client.on('guildCreate', guild => {
+    fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(config.default_settings))
 })
 
 //loading minigames
