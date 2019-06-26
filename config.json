@@ -1,14 +1,14 @@
 {
-    "token": "",
+    "token": "NTkzMTU3MzY4OTA1MjAzNzM3.XRONGg.RIopZzn1NyduyyohaWGZHCefXQo",
     "prefix": "!",
     "fakeStarts": [
-        "Alright, ",
-        "Okay, ",
-        "Now ",
+        "Alright,",
+        "Okay,",
+        "Now,",
         "Simoon says",
         "Simmon says",
         "Simone says",
-        "I say"
+        "Please"
     ],
     "tasks": {
         "say": [
@@ -16,7 +16,8 @@
             "hi",
             "boom",
             "beep boop",
-            "i love this bot"
+            "i love this bot",
+            "this is the best game i have ever participated in"
         ],
         "emoji": [
             "diamond_shape_with_a_dot_inside",

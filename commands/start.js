@@ -33,7 +33,7 @@ module.exports = {
                 time: 10000
             })
 
-            msg.delete()
+            
             /*if(collected.size < 2){
                 channel.send('**Game canceled!** Not enough players!')
                 return
@@ -47,6 +47,7 @@ module.exports = {
             players = players.filter(player => player.id != client.user.id)
 
             runGame(channel, players, client)
+            msg.delete()
             //make game mechanics in game.js
         })
     }

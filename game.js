@@ -1,28 +1,57 @@
 let randomStart = require('./randomStart.js')
 var discord = require('discord.js')
 
-module.exports.runGame = async function (channel, players, client) {
-
+module.exports.runGame = async function (channel, players_, client) {
+    let players = players_
+    let time = 15000
+    let winners
+    let gameOn = true
+    let rounds = 1
     //example of how to start a game
+    while (gameOn) {
+        //chooses a random minigame
+        const currentGame = client.minigames[getRandomInt(client.minigames.length)]
+        //picks a random start of startmessage (50% chance of getting "Simon says")
+        const start = randomStart(channel.guild.id)
+        
+        //sends startmessage
+        const startMessage = await channel.send(`${start.string} ${currentGame.startMessage.toLowerCase()}`)
+        //runs the game
+        
+        let {
+            playersOut,
+            playersLeft
+        } = await currentGame.run(channel, players, time, client, {
+            simonSaid: start.real,
+            startMessage: startMessage
+        })
+        
+        await sleep(1000)
 
-    //chooses a random minigame
-    const currentGame = client.minigames[getRandomInt(client.minigames.length)]
-    //picks a random start of startmessage (50% chance of getting "Simon says")
-    const start = randomStart(channel.guild.id)
-    //sends startmessage
-    const startMessage = await channel.send(`${start.string} ${currentGame.startMessage.toLowerCase()}`)
-    //runs the game
-    const time = 15000 //how much time each player has to complete the task, should lower over time
-    let {playersOut, playersLeft} = await currentGame.run(channel, players, time, client, {
-        simonSaid: start.real,
-        startMessage: startMessage
-    })
-    //say whos out
-    if(playersOut.length > 0) channel.send(`${playersOut.join(', ')} ${playersOut.length > 1 ? "are" : "is"} out!`)
-    //console log whos still in the game (for testing)
-    console.log(playersLeft.map((player) => player.username))
+        //say whos out
+        if (playersOut.length > 0) channel.send(`${playersOut.join(', ')} ${playersOut.length > 1 ? "are" : "is"} out!`)
+        else channel.send('Good job!')
+
+        await sleep(1000)
+        
+        if(playersLeft.length < 1){
+            winners = playersOut
+            gameOn = false
+            break
+        }
+        time *= 0.8
+        players = playersLeft
+        rounds++
+    }
+
+    channel.send(`${winners.join(', ')} won with ${rounds} points! GG`)
+
 }
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
