@@ -8,7 +8,7 @@ const {
 
 const client = new Client();
 
-const config = JSON.parse(fs.readFileSync('config.js'));
+const config = JSON.parse(fs.readFileSync('config.json'));
 
 const prefix = config.prefix //idk
 
