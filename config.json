@@ -17,12 +17,8 @@
             "boom",
             "beep boop",
             "i love this bot",
-            "this is the best game i have ever participated in"
-        ],
-        "emoji": [
+            "this is the best game i have ever participated in",
             "diamond_shape_with_a_dot_inside",
-            "eight_spoked_asterisk",
-            "negative_squared_cross_mark",
             "white_check_mark",
             "globe_with_meridians"
         ],
@@ -38,12 +34,6 @@
             "idle",
             "dnd",
             "offline"
-        ],
-        "command": [
-            {
-                "command": "!rank",
-                "bot": "159985870458322944"
-            }
         ]
     }
 }
