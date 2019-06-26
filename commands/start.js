@@ -39,8 +39,14 @@ module.exports = {
                 return
             }*/ //add this back in final release
             channel.send(`**Starting game with ${collected.size} players!**`)
+            let players = []
+            for(let reaction of collected.array()){
+                let users = await reaction.fetchUsers()
+                players = players.concat(users.array())
+            }
+            players = players.filter(player => player.id != client.user.id)
 
-            runGame(channel, collected.array)
+            runGame(channel, players, client)
             //make game mechanics in game.js
         })
 

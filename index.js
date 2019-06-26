@@ -51,5 +51,16 @@ client.on('ready', () => {
     console.log('online!')
 })
 
+//loading minigames
+client.minigames = []
+const gameFiles = fs.readdirSync('./minigames').filter(file => file.endsWith('.js'))
+
+for (const file of gameFiles) {
+    const game = require(`./minigames/${file}`)
+    client.minigames.push(game)
+}
+
+console.log(`Loaded ${client.minigames.length} games!`)
+
 client.on('error', console.error);
 client.login(token)
