@@ -29,8 +29,11 @@ module.exports.runGame = async function (channel, players_, client) {
         await sleep(1000)
 
         //say whos out
-        if (playersOut.length > 0) channel.send(`${playersOut.join(', ')} ${playersOut.length > 1 ? "are" : "is"} out!`)
-        else channel.send('Good job!')
+        let embed = new discord.RichEmbed()
+        if (playersOut.length > 0) embed.setDescription(`${playersOut.join(', ')} ${playersOut.length > 1 ? "are" : "is"} out!`)
+        else embed.setTitle('Good job! Nobody fell out!')
+
+        channel.send(embed)
 
         await sleep(1000)
         
