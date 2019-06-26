@@ -8,9 +8,9 @@ const {
 
 const client = new Client();
 
-const prefix = "=" //idk
-const token = fs.readFileSync('token.txt').toString()
+const config = JSON.parse(fs.readFileSync('config.js'));
 
+const prefix = config.prefix //idk
 
 //command stuff
 client.commands = new discord.Collection()
@@ -63,4 +63,4 @@ for (const file of gameFiles) {
 console.log(`Loaded ${client.minigames.length} games!`)
 
 client.on('error', console.error);
-client.login(token)
+client.login(config.token)
