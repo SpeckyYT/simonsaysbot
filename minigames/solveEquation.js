@@ -8,19 +8,19 @@ module.exports = {
         await channel.send(`**${equation.toUpperCase().replace('*', '×')}**`)
         const answer = eval(equation)
 
-        const collector = channel.createMessageCollector(() => true, {
-            time: time
+        const collector = channel.createMessageCollector(() => true);
+
+        let collected
+        collector.on('end', collected_ => {
+            collected = collected_
         });
-
-        //when time is up
         
-        let collected = await new Promise(resolve => {
-            collector.on('end', collected_ => {
-                resolve(collected_)
-            });
-        })
-
+        //when time is up
+        await sleep(time)
         await channel.send('Simon says time\'s up!')
+        collector.stop()
+
+        
         let messages = collected.array()
         let out = []
         let outIndex = []
@@ -29,7 +29,7 @@ module.exports = {
             //check each message
             let sentCorrectMessage = false
             for (const message of messages) {
-                if (message.author == player && message.content.toLowerCase().includes(answer)) {
+                if (message.author == player && parseInt(message.content.toLowerCase()) == answer) {
                     //if simon didnt say, the player is out
                     if (!info.simonSaid) {
                         out.push(player)
@@ -59,4 +59,8 @@ module.exports = {
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

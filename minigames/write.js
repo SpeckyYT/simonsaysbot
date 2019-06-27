@@ -3,19 +3,22 @@
 module.exports = {
     startMessage: 'write something in chat!',
     run: async function (channel, players, time, client, info) {
-        const collector = channel.createMessageCollector(() => true, {
-            time: time
-        });
+        
 
         //when time is up
         
-        let collected = await new Promise(resolve => {
-            collector.on('end', collected_ => {
-                resolve(collected_)
-            });
-        })
+        const collector = channel.createMessageCollector(() => true);
 
+        let collected
+        collector.on('end', collected_ => {
+            collected = collected_
+        });
+        
+        //when time is up
+        await sleep(time)
         await channel.send('Simon says time\'s up!')
+        collector.stop()
+
         let messages = collected.array()
         let out = []
         let outIndex = []
@@ -50,4 +53,8 @@ module.exports = {
             playersLeft: newPlayers
         })
     }
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
