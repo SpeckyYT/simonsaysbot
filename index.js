@@ -29,6 +29,10 @@ for (const file of commandFiles) {
 console.log(`Loaded ${commandFiles.length} commands and ${client.commands.array().length} aliases!`);
 
 client.on('message', message => {
+    // if config creation failed, we can still make it here
+    fs.open(`./guilds/${message.guild.id}.json`, 'r', (err, fd) => {
+        if (err) fs.writeFileSync(`./guilds/${message.guild.id}.json`, JSON.stringify(config.default_settings))
+    })
     let content = message.content
     if (!content.startsWith(prefix)) return
     let words = content.split(' ')
@@ -37,12 +41,12 @@ client.on('message', message => {
 
     if (cmd) {
         console.log(message.author.username + " (" + message.channel.type + ") " + ": " + message.content)
-        try {
+        //try {
             cmd.execute(client, message, words)
-        } catch (error) {
-            message.channel.send("**ERROR: **" + error).then(msg => msg.delete(10000))
-            console.log("**ERROR: **" + error)
-        }
+        //} catch (error) {
+        //    message.channel.send("**ERROR: **" + error).then(msg => msg.delete(10000))
+        //    console.log("**ERROR: **" + error)
+        //}
     }
 
 })
@@ -51,6 +55,7 @@ client.on('ready', () => {
     console.log('online!')
 })
 
+// make config file when joined new guild
 client.on('guildCreate', guild => {
     fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(config.default_settings))
 })
