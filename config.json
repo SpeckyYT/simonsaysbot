@@ -2,6 +2,7 @@
     "token": "",
     "prefix": "!",
     "default_settings": {
+        "opposite_day": false,
         "fakeStarts": [
             "Alright,",
             "Okay,",
@@ -18,10 +19,7 @@
                 "boom",
                 "beep boop",
                 "i love this bot",
-                "this is the best game i have ever participated in",
-                "diamond_shape_with_a_dot_inside",
-                "white_check_mark",
-                "globe_with_meridians"
+                "this is the best game i have ever participated in"
             ],
             "react": [
                 "thumbs_up"

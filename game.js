@@ -1,5 +1,6 @@
 let randomStart = require('./randomStart.js')
 var discord = require('discord.js')
+var fs = require('fs')
 
 module.exports.runGame = async function (channel, players_, client) {
     let players = players_
@@ -11,9 +12,9 @@ module.exports.runGame = async function (channel, players_, client) {
     while (gameOn) {
         //chooses a random minigame
         const currentGame = client.minigames[getRandomInt(client.minigames.length)]
-        //picks a random start of startmessage (50% chance of getting "Simon says")
+        //picks a random start of startmessage (67% chance of getting "Simon says")
         const start = randomStart(channel.guild.id)
-        
+
         //sends startmessage
         const startMessage = await channel.send(`${start.string} ${currentGame.startMessage.toLowerCase()}`)
         //runs the game
@@ -25,19 +26,25 @@ module.exports.runGame = async function (channel, players_, client) {
             simonSaid: start.real,
             startMessage: startMessage
         })
-        
+
         await sleep(1000)
 
         //say whos out
-        let embed = new discord.RichEmbed()
-        if (playersOut.length > 0) embed.setDescription(`${playersOut.join(', ')} ${playersOut.length > 1 ? "are" : "is"} out!`)
-        else embed.setTitle('Good job! Nobody fell out!')
+        var embed = new discord.RichEmbed()
+        if (playersOut.length > 0) {
+            embed.setDescription(`${playersOut.join(', ')} ${playersOut.length > 1 ? "are" : "is"} out!`)
+                .setColor(`#FF230F`)
+        }
+        else {
+            embed.setTitle('Good job! Nobody fell out!')
+                .setColor(`#33CC14`)
+        }
 
         channel.send(embed)
 
         await sleep(1000)
-        
-        if(playersLeft.length < 1){
+
+        if (playersLeft.length < 1) {
             winners = playersOut
             gameOn = false
             break
@@ -47,8 +54,10 @@ module.exports.runGame = async function (channel, players_, client) {
         rounds++
     }
 
-    channel.send(`${winners.join(', ')} won with ${rounds} points! GG`)
-
+    var embed = new discord.RichEmbed()
+    .setTitle('The game has ended!')
+    .setDescription(`${winners.join(', ')} won with ${rounds} points! GG!`)
+    .setColor('#FFBE11')
 }
 
 function getRandomInt(max) {

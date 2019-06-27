@@ -1,17 +1,13 @@
-var fs = require('fs')
-
+const fs = require('fs')
 module.exports = {
-    startMessage: 'write the correct answer to this equation:',
+    startMessage: 'the opposite day!',
     run: async function (channel, players, time, client, info) {
-        const symbols = ['+', '-', '*'] //×
-        const symbol = symbols[getRandomInt(symbols.length)]
-        const equation = `${getRandomInt(symbol == '*' ? 10 : 20)} ${symbol} ${getRandomInt(symbol == '*' ? 10 : 20)}`
-        await channel.send(`**${equation.toUpperCase().replace('*', '×')}**`)
-        const answer = eval(equation)
+        var config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`))
+        
+        if (!config.opposite_day) await channel.send('Opposite day begins soon! Write **ok** in chat if you are ready!')
+        else await channel.send('Opposite day has ended! Write **ok** if you are ready to go back to normal!')
 
         const collector = channel.createMessageCollector(() => true);
-
-        const config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`))
 
         let collected
         collector.on('end', collected_ => {
@@ -20,8 +16,10 @@ module.exports = {
 
         //when time is up
         await sleep(time)
-        if (config.opposite_day) await channel.send('Alright time\'s up!')
-        else await channel.send('Simon says time\'s up!')
+
+        if (!config.opposite_day) await channel.send('Simon says time\'s up! We\'re ready to start the opposite day!')
+        else await channel.send('Alright time\'s up! We\'ve ended the opposite day!')
+
         collector.stop()
 
         let messages = collected.array()
@@ -32,18 +30,12 @@ module.exports = {
             //check each message
             let sentCorrectMessage = false
             for (const message of messages) {
-                if (message.author == player && parseInt(message.content.toLowerCase()) == answer) {
-                    //if simon didnt say, the player is out
-                    if (!info.simonSaid) {
-                        out.push(player)
-                        outIndex.push(i)
-                    } else {
-                        sentCorrectMessage = true
-                    }
+                if (message.author == player && message.content.toLowerCase().includes("ok")) {
+                    sentCorrectMessage = true
                     break
                 }
             }
-            if (info.simonSaid && !sentCorrectMessage) {
+            if (!sentCorrectMessage) {
                 out.push(player)
                 outIndex.push(i)
             }
@@ -53,6 +45,10 @@ module.exports = {
         outIndex.forEach((i) => {
             newPlayers.splice(i)
         })
+
+        config.opposite_day = !config.opposite_day
+        fs.writeFileSync(`./guilds/${channel.guild.id}.json`, JSON.stringify(config))
+
         return ({
             playersOut: out,
             playersLeft: newPlayers

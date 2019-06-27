@@ -1,22 +1,25 @@
-//example of a simple minigame
+var fs = require('fs')
 
 module.exports = {
     startMessage: 'write something in chat!',
     run: async function (channel, players, time, client, info) {
-        
 
         //when time is up
-        
+
         const collector = channel.createMessageCollector(() => true);
+
+        const config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`))
+ 
 
         let collected
         collector.on('end', collected_ => {
             collected = collected_
         });
-        
+
         //when time is up
         await sleep(time)
-        await channel.send('Simon says time\'s up!')
+        if (config.opposite_day) await channel.send('Alright time\'s up!')
+        else await channel.send('Simon says time\'s up!')
         collector.stop()
 
         let messages = collected.array()
@@ -48,7 +51,7 @@ module.exports = {
         outIndex.forEach((i) => {
             newPlayers.splice(i)
         })
-        return({
+        return ({
             playersOut: out,
             playersLeft: newPlayers
         })

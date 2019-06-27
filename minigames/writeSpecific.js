@@ -1,11 +1,13 @@
-const fs = require('fs')
+var fs = require('fs');
+
 module.exports = {
     startMessage: 'write this in chat:',
     run: async function (channel, players, time, client, info) {
-        const alternatives = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`)).tasks.say
+        const config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`))
+        const alternatives = config.tasks.say
 
         const word = alternatives[getRandomInt(alternatives.length)].toLowerCase()
-        await channel.send(`**${word.toUpperCase()}**`)
+        await channel.send(`**${word}**`)
 
         const collector = channel.createMessageCollector(() => true);
 
@@ -13,10 +15,11 @@ module.exports = {
         collector.on('end', collected_ => {
             collected = collected_
         });
-        
+
         //when time is up
         await sleep(time)
-        await channel.send('Simon says time\'s up!')
+        if (config.opposite_day) await channel.send('Alright time\'s up!')
+        else await channel.send('Simon says time\'s up!')
         collector.stop()
 
         let messages = collected.array()
@@ -48,7 +51,7 @@ module.exports = {
         outIndex.forEach((i) => {
             newPlayers.splice(i)
         })
-        return({
+        return ({
             playersOut: out,
             playersLeft: newPlayers
         })

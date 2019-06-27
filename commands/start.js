@@ -1,4 +1,5 @@
 const discord = require('discord.js')
+const fs = require('fs')
 
 const {
     Client,
@@ -13,6 +14,9 @@ module.exports = {
     help: '=startgame [channel]',
 
     execute(client, message, words) {
+        var config = JSON.parse(fs.readFileSync(`./guilds/${message.guild.id}.json`))
+        config.opposite_day = false
+        fs.writeFileSync(`./guilds/${message.guild.id}.json`, JSON.stringify(config))
 
         let channel = client.channels.get(words[1].slice(2).slice(0, -1))
 
@@ -32,7 +36,6 @@ module.exports = {
             let collected = await msg.awaitReactions(() => true, {
                 time: 10000
             })
-
             
             /*if(collected.size < 2){
                 channel.send('**Game canceled!** Not enough players!')
