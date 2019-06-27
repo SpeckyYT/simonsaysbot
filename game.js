@@ -25,7 +25,7 @@ module.exports.runGame = async function (channel, players_, client) {
         }
 
         //sends startmessage
-        const startMessage = await channel.send(`${start.string} ${currentGame.startMessage.toLowerCase()}`)
+        const startMessage = await channel.send(`**${start.string} ${currentGame.startMessage.toLowerCase()}**`)
         //runs the game
 
         let {
