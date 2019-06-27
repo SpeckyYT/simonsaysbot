@@ -1,39 +1,41 @@
 {
     "token": "",
     "prefix": "!",
-    "fakeStarts": [
-        "Alright,",
-        "Okay,",
-        "Now,",
-        "Simoon says",
-        "Simmon says",
-        "Simone says",
-        "Please"
-    ],
-    "tasks": {
-        "say": [
-            "hello",
-            "hi",
-            "boom",
-            "beep boop",
-            "i love this bot",
-            "this is the best game i have ever participated in",
-            "diamond_shape_with_a_dot_inside",
-            "white_check_mark",
-            "globe_with_meridians"
+    "default_settings": {
+        "fakeStarts": [
+            "Alright,",
+            "Okay,",
+            "Now,",
+            "Simoon says",
+            "Simmon says",
+            "Simone says",
+            "Please"
         ],
-        "reaction": [
-            "thumbs_up"
-        ],
-        "nickname": [
-            "simon",
-            "best person"
-        ],
-        "status": [
-            "online",
-            "idle",
-            "dnd",
-            "offline"
-        ]
+        "tasks": {
+            "say": [
+                "hello",
+                "hi",
+                "boom",
+                "beep boop",
+                "i love this bot",
+                "this is the best game i have ever participated in",
+                "diamond_shape_with_a_dot_inside",
+                "white_check_mark",
+                "globe_with_meridians"
+            ],
+            "react": [
+                "thumbs_up"
+            ],
+            "nickname": [
+                "simon",
+                "best person"
+            ],
+            "status": [
+                "online",
+                "idle",
+                "dnd",
+                "offline"
+            ]
+        }
     }
 }
