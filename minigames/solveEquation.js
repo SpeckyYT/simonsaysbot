@@ -1,4 +1,4 @@
-const fs = require('fs')
+
 module.exports = {
     startMessage: 'write the correct answer to this equation:',
     run: async function (channel, players, time, client, info) {
