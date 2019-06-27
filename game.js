@@ -42,7 +42,7 @@ module.exports.runGame = async function (channel, players_, client) {
             gameOn = false
             break
         }
-        time *= 0.8
+        time *= 0.9
         players = playersLeft
         rounds++
     }
