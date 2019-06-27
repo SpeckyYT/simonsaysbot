@@ -13,7 +13,15 @@ module.exports.runGame = async function (channel, players_, client) {
         //chooses a random minigame
         const currentGame = client.minigames[getRandomInt(client.minigames.length)]
         //picks a random start of startmessage (67% chance of getting "Simon says")
-        const start = randomStart(channel.guild.id)
+        let start
+        if(currentGame.startMessage == 'it\'s a new day!'){
+            start = {
+                string: 'Simon says',
+                real: true
+            }
+        } else {
+            start = randomStart(channel.guild.id)
+        }
 
         //sends startmessage
         const startMessage = await channel.send(`${start.string} ${currentGame.startMessage.toLowerCase()}`)

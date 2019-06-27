@@ -17,8 +17,17 @@ module.exports = {
         var config = JSON.parse(fs.readFileSync(`./guilds/${message.guild.id}.json`))
         config.opposite_day = false
         fs.writeFileSync(`./guilds/${message.guild.id}.json`, JSON.stringify(config))
+        if(words.length < 2){
+            channel.send(`Include a channel! (${words[0]} #[channelname])`)
+            return
+        }
 
         let channel = client.channels.get(words[1].slice(2).slice(0, -1))
+
+        if(!channel){
+            channel.send(`Thats not a valid channel!`)
+            return
+        }
 
         if (channel) {
             message.channel.send(`starting game in ${channel}!`)
