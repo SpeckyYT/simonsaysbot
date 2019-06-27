@@ -4,19 +4,20 @@ var fs = require('fs')
 
 module.exports.runGame = async function (channel, players_, client) {
     let players = players_
-    let time = 15000
+    let time = 1
     let winners
     let gameOn = true
     let rounds = 1
     //example of how to start a game
     while (gameOn) {
+        const config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`));
         //chooses a random minigame
         const currentGame = client.minigames[getRandomInt(client.minigames.length)]
         //picks a random start of startmessage (67% chance of getting "Simon says")
         let start
-        if(currentGame.startMessage == 'it\'s a new day!'){
+        if (currentGame.startMessage == 'it\'s a new day!') {
             start = {
-                string: 'Simon says',
+                string: config.opposite_day ? 'Good morning,' : 'Simon says',
                 real: true
             }
         } else {
@@ -26,11 +27,11 @@ module.exports.runGame = async function (channel, players_, client) {
         //sends startmessage
         const startMessage = await channel.send(`${start.string} ${currentGame.startMessage.toLowerCase()}`)
         //runs the game
-        
+
         let {
             playersOut,
             playersLeft
-        } = await currentGame.run(channel, players, time, client, {
+        } = await currentGame.run(channel, players, (time * currentGame.defTime).clamp(3000, 15000), client, {
             simonSaid: start.real,
             startMessage: startMessage
         })
@@ -42,8 +43,7 @@ module.exports.runGame = async function (channel, players_, client) {
         if (playersOut.length > 0) {
             embed.setDescription(`${playersOut.join(', ')} ${playersOut.length > 1 ? "are" : "is"} out!`)
                 .setColor(`#FF230F`)
-        }
-        else {
+        } else {
             embed.setTitle('Good job! Nobody fell out!')
                 .setColor(`#33CC14`)
         }
@@ -63,9 +63,9 @@ module.exports.runGame = async function (channel, players_, client) {
     }
 
     var embed = new discord.RichEmbed()
-    .setTitle('The game has ended!')
-    .setDescription(`${winners.join(', ')} won with ${rounds} points! GG!`)
-    .setColor('#FFBE11')
+        .setTitle('The game has ended!')
+        .setDescription(`${winners.join(', ')} won with ${rounds} points! GG!`)
+        .setColor('#FFBE11')
 }
 
 function getRandomInt(max) {
@@ -75,3 +75,7 @@ function getRandomInt(max) {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+Number.prototype.clamp = function (min, max) {
+    return Math.min(Math.max(this, min), max);
+};

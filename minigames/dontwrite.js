@@ -2,6 +2,7 @@ var fs = require('fs')
 
 module.exports = {
     startMessage: 'don\'t write anything in chat!',
+    defTime: 7000,
     run: async function (channel, players, time, client, info) {
         const collector = channel.createMessageCollector(() => true);
 

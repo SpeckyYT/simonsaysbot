@@ -1,6 +1,7 @@
 const fs = require('fs')
 module.exports = {
     startMessage: 'it\'s a new day!',
+    defTime: 20000,
     run: async function (channel, players, time, client, info) {
         var config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`))
         

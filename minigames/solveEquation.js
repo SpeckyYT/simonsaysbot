@@ -2,6 +2,7 @@ var fs = require('fs')
 
 module.exports = {
     startMessage: 'write the correct answer to this equation:',
+    defTime: 16000,
     run: async function (channel, players, time, client, info) {
         const symbols = ['+', '-', '*'] //×
         const symbol = symbols[getRandomInt(symbols.length)]
