@@ -10,8 +10,10 @@ module.exports.runGame = async function (channel, players_, client) {
     let rounds = 1
     let lastGame = null
     //example of how to start a game
+    let config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`)); //for this game only
+
     while (gameOn) {
-        const config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`));
+        
         //chooses a random minigame
         
         let enabledGames = []
@@ -30,10 +32,10 @@ module.exports.runGame = async function (channel, players_, client) {
         while(currentGame == lastGame){
             currentGame = enabledGames[getRandomInt(enabledGames.length)]
         }
-        
+        console.log(config.opposite_day)
         //picks a random start of startmessage (67% chance of getting "Simon says")
         let start
-        if (currentGame.startMessage == 'it\'s a new day!') {
+        if (currentGame.name == 'oppositeDay') {
             start = {
                 string: config.opposite_day ? 'Good morning,' : 'Simon says',
                 real: true
@@ -44,7 +46,7 @@ module.exports.runGame = async function (channel, players_, client) {
                 real: true
             } 
         } else {
-            start = randomStart(channel.guild.id)
+            start = randomStart(channel.guild.id, config)
         }
         let actualTime = (time * currentGame.defTime).clamp(5000, 15000)
         //sends startmessage
@@ -53,11 +55,14 @@ module.exports.runGame = async function (channel, players_, client) {
 
         let {
             playersOut,
-            playersLeft
+            playersLeft,
+            configOut
         } = await currentGame.run(channel, players, actualTime, client, {
             simonSaid: start.real,
-            startMessage: startMessage
+            startMessage: startMessage,
+            config: config
         })
+        config = configOut
 
         await sleep(1000)
 
@@ -80,7 +85,7 @@ module.exports.runGame = async function (channel, players_, client) {
             gameOn = false
             break
         }
-        time *= 0.9
+        time *= 0.94
         players = playersLeft
         rounds++
         lastGame = currentGame

@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-module.exports = function (guild_id) {
-    const config = JSON.parse(fs.readFileSync(`./guilds/${guild_id}.json`));
+module.exports = function (guild_id, config) {
+    
     let choice = getRandomInt(3)
 
     if (choice != 0) {

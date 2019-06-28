@@ -4,7 +4,7 @@ module.exports = {
     defTime: 20000,
     name: 'oppositeDay',
     run: async function (channel, players, time, client, info) {
-        var config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`))
+        var config = info.config
         
         if (!config.opposite_day) await channel.send('Opposite day begins soon! Write **ok** in chat if you are ready!')
         else await channel.send('Opposite day has ended! Write **ok** if you are ready to go back to normal!')
@@ -23,7 +23,7 @@ module.exports = {
         else await channel.send('Alright time\'s up! We\'ve ended the opposite day!')
 
         collector.stop()
-        sleep(6000)
+        await sleep(6000)
         let messages = collected.array()
         let out = []
         let outIndex = []
@@ -49,11 +49,12 @@ module.exports = {
         })
 
         config.opposite_day = !config.opposite_day
-        fs.writeFileSync(`./guilds/${channel.guild.id}.json`, JSON.stringify(config))
+        
 
         return ({
             playersOut: out,
-            playersLeft: newPlayers
+            playersLeft: newPlayers,
+            configOut: config
         })
     }
 }

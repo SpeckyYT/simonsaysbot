@@ -12,7 +12,8 @@ module.exports = {
         })
         await sleep(time - 1000)
         //when time is up
-        await channel.send('Simon says time\'s up!')
+        if (info.config.opposite_day) await channel.send('Alright time\'s up!')
+        else await channel.send('Simon says time\'s up!')
         await sleep(1000)
         allReactions = await allReactions
         allReactions = allReactions.array()
@@ -55,7 +56,8 @@ module.exports = {
         })
         return({
             playersOut: out,
-            playersLeft: newPlayers
+            playersLeft: newPlayers,
+            configOut: info.config
         })
     }
 }

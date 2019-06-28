@@ -5,7 +5,7 @@ module.exports = {
     defTime: 25000,
     name: 'reactSpecific',
     run: async function (channel, players, time, client, info) {
-        const config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`))
+        const config = info.config
         const alternatives = config.tasks.react
 
         const emoji = alternatives[getRandomInt(alternatives.length)]
@@ -16,7 +16,8 @@ module.exports = {
         })
         await sleep(time - 1000)
         //when time is up
-        await channel.send('Simon says time\'s up!')
+        if (config.opposite_day) await channel.send('Alright time\'s up!')
+        else await channel.send('Simon says time\'s up!')
         await sleep(1000)
         allReactions = await allReactions
         allReactions = allReactions.array()
@@ -62,7 +63,8 @@ module.exports = {
         })
         return ({
             playersOut: out,
-            playersLeft: newPlayers
+            playersLeft: newPlayers,
+            configOut: config
         })
     }
 }

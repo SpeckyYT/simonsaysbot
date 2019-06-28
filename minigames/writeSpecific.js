@@ -5,7 +5,7 @@ module.exports = {
     defTime: 20000,
     name: 'writeSpecific',
     run: async function (channel, players, time, client, info) {
-        const config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`))
+        const config = info.config
         const alternatives = config.tasks.say
 
         const word = alternatives[getRandomInt(alternatives.length)].toLowerCase()
@@ -55,7 +55,8 @@ module.exports = {
         })
         return ({
             playersOut: out,
-            playersLeft: newPlayers
+            playersLeft: newPlayers,
+            configOut: config
         })
     }
 }

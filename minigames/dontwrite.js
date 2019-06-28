@@ -7,7 +7,7 @@ module.exports = {
     run: async function (channel, players, time, client, info) {
         const collector = channel.createMessageCollector(() => true);
 
-        const config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`))
+        const config = info.config
 
         let collected
         collector.on('end', collected_ => {
@@ -50,7 +50,8 @@ module.exports = {
         })
         return ({
             playersOut: out,
-            playersLeft: newPlayers
+            playersLeft: newPlayers,
+            configOut: config
         })
     }
 }
