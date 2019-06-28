@@ -12,7 +12,18 @@ module.exports.runGame = async function (channel, players_, client) {
     while (gameOn) {
         const config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`));
         //chooses a random minigame
-        const currentGame = client.minigames[getRandomInt(client.minigames.length)]
+        
+        let enabledGames = []
+        for(let game of client.minigames){
+            if(config.minigames[game.name]){
+                enabledGames.push(game)
+            }
+        }
+        if(enabledGames.length == 0){
+            channel.send('You need to have at least one game enabled to play. Enable/disable with the config command.')
+            return
+        }
+        const currentGame = enabledGames[getRandomInt(enabledGames.length)]
         //picks a random start of startmessage (67% chance of getting "Simon says")
         let start
         if (currentGame.startMessage == 'it\'s a new day!') {

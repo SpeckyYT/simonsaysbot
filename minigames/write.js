@@ -3,6 +3,7 @@ var fs = require('fs')
 module.exports = {
     startMessage: 'write something in chat!',
     defTime: 10000,
+    name: 'write',
     run: async function (channel, players, time, client, info) {
 
         //when time is up

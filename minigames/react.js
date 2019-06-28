@@ -3,6 +3,7 @@
 module.exports = {
     startMessage: 'react to this message!',
     defTime: 20000,
+    name: 'react',
     run: async function (channel, players, time, client, info) {
         
 

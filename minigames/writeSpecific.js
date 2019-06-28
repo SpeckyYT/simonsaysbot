@@ -3,6 +3,7 @@ var fs = require('fs');
 module.exports = {
     startMessage: 'write this in chat:',
     defTime: 20000,
+    name: 'writeSpecific',
     run: async function (channel, players, time, client, info) {
         const config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`))
         const alternatives = config.tasks.say
