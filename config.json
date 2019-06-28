@@ -1,6 +1,12 @@
 {
     "token": "",
     "default_settings": {
+        "config_permission": [
+
+        ],
+        "start_permission": [
+
+        ],
         "prefix": "!",
         "minigames": {
             "dontWrite": true,

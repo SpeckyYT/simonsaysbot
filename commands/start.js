@@ -17,35 +17,40 @@ module.exports = {
         var config = JSON.parse(fs.readFileSync(`./guilds/${message.guild.id}.json`))
         config.opposite_day = false
         fs.writeFileSync(`./guilds/${message.guild.id}.json`, JSON.stringify(config))
+        if (!config["start_permission"].join(" ").includes(message.author.id)) {
+            message.reply(`You don't have permissions to use this command!`)
+            return
+        }
         if (words.length < 2) {
-            channel.send(`Include a channel! (${words[0]} #[channelname])`)
+            message.reply(`Include a channel! (${words[0]} #[channelname])`)
             return
         }
 
         let channel = client.channels.get(words[1].slice(2).slice(0, -1))
 
         if (!channel) {
-            channel.send(`Thats not a valid channel!`)
+            message.reply(`That's not a valid channel!`)
             return
         }
         let time = words[2] ? parseInt(words[2]) * 1000 : 60000
-        if(!time){
-            message.channel.send('The time must be an integer of seconds')
+        if (!time){
+            message.reply('The time must be an integer of seconds.')
             return
         }
 
         if (channel) {
-            message.channel.send(`starting game in ${channel}!`)
+            message.channel.send(`Starting game in ${channel}!`)
         } else {
-            message.channel.send(`${words[1]} is not a valid channel`)
+            message.reply(`${words[1]} is not a valid channel`)
             return
         }
 
-        
-
         //collect players
 
-        let startembed = new RichEmbed().setTitle("REACT TO THIS MESSAGE TO JOIN SIMON SAYS!").setFooter(`The game will start in ${Math.floor(time / 1000)} seconds.`)
+        let startembed = new RichEmbed().setTitle("REACT TO THIS MESSAGE TO JOIN SIMON SAYS!")
+        .setDescription(`Hosted by <@${message.author.id}>`)
+        .setColor(message.member.displayColor)
+        .setFooter(`The game will start in ${Math.floor(time / 1000)} seconds.`)
         channel.send(startembed).then(async (msg) => {
             msg.react('🎲')
             
