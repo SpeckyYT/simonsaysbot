@@ -8,6 +8,7 @@ module.exports.runGame = async function (channel, players_, client) {
     let winners
     let gameOn = true
     let rounds = 1
+    let lastGame = null
     //example of how to start a game
     while (gameOn) {
         const config = JSON.parse(fs.readFileSync(`./guilds/${channel.guild.id}.json`));
@@ -16,6 +17,7 @@ module.exports.runGame = async function (channel, players_, client) {
         let enabledGames = []
         for(let game of client.minigames){
             if(config.minigames[game.name]){
+                if(game.name == 'oppositeDay' && rounds < 4) continue
                 enabledGames.push(game)
             }
         }
@@ -23,7 +25,12 @@ module.exports.runGame = async function (channel, players_, client) {
             channel.send('You need to have at least one game enabled to play. Enable/disable with the config command.')
             return
         }
-        const currentGame = enabledGames[getRandomInt(enabledGames.length)]
+        let currentGame  = enabledGames[getRandomInt(enabledGames.length)]
+        console.log(currentGame.name)
+        while(currentGame == lastGame){
+            currentGame = enabledGames[getRandomInt(enabledGames.length)]
+        }
+        
         //picks a random start of startmessage (67% chance of getting "Simon says")
         let start
         if (currentGame.startMessage == 'it\'s a new day!') {
@@ -31,10 +38,15 @@ module.exports.runGame = async function (channel, players_, client) {
                 string: config.opposite_day ? 'Good morning,' : 'Simon says',
                 real: true
             }
+        } else if(rounds < 3){
+            start = {
+                string: 'Simon says',
+                real: true
+            } 
         } else {
             start = randomStart(channel.guild.id)
         }
-        let actualTime = (time * currentGame.defTime).clamp(3000, 15000)
+        let actualTime = (time * currentGame.defTime).clamp(5000, 15000)
         //sends startmessage
         const startMessage = await channel.send(`**${start.string} ${currentGame.startMessage.toLowerCase()}** *(You have ${Math.floor(actualTime / 1000)} seconds)*`)
         //runs the game
@@ -71,6 +83,7 @@ module.exports.runGame = async function (channel, players_, client) {
         time *= 0.9
         players = playersLeft
         rounds++
+        lastGame = currentGame
     }
 
     var embed = new discord.RichEmbed()

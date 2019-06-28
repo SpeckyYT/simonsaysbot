@@ -5,6 +5,7 @@
         "minigames": {
             "dontWrite": true,
             "react": true,
+            "reactSpecific": true,
             "solveEquation": true,
             "write": true,
             "writeSpecific": true,
@@ -30,7 +31,10 @@
                 "you are cool"
             ],
             "react": [
-                "thumbs_up"
+                "🤖",
+                "👍",
+                "🔥",
+                "🤔"
             ],
             "status": [
                 "online",

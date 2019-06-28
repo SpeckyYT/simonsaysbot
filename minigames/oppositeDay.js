@@ -23,7 +23,7 @@ module.exports = {
         else await channel.send('Alright time\'s up! We\'ve ended the opposite day!')
 
         collector.stop()
-        sleep(2000)
+        sleep(6000)
         let messages = collected.array()
         let out = []
         let outIndex = []
