@@ -36,7 +36,7 @@ module.exports.runGame = async function (channel, players_, client) {
         }
         let actualTime = (time * currentGame.defTime).clamp(3000, 15000)
         //sends startmessage
-        const startMessage = await channel.send(`**${start.string} ${currentGame.startMessage.toLowerCase()}** *You have ${Math.floor(actualTime / 1000)} seconds*`)
+        const startMessage = await channel.send(`**${start.string} ${currentGame.startMessage.toLowerCase()}** *(You have ${Math.floor(actualTime / 1000)} seconds)*`)
         //runs the game
 
         let {
