@@ -28,6 +28,7 @@ console.log(`Loaded ${commandFiles.length} commands and ${client.commands.array(
 
 client.on('message', message => {
     // if config creation failed, we can still make it here
+    if(message.channel.type == 'dm') return
     var guildConfig = config.default_settings
     guildConfig["config_permission"].push(message.guild.ownerID)
     guildConfig["start_permission"].push(message.guild.ownerID)

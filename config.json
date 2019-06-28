@@ -15,7 +15,9 @@
             "solveEquation": true,
             "write": true,
             "writeSpecific": true,
-            "oppositeDay": true
+            "oppositeDay": true,
+            "writeDM": true,
+            "writeDMSpecific": true
         },
         "fakeStarts": [
             "Alright,",
@@ -33,8 +35,8 @@
                 "boom",
                 "beep boop",
                 "i love this bot",
-                "this is the best game i have ever participated in",
-                "you are cool"
+                "to be or not to be",
+                "simon is cool"
             ],
             "react": [
                 "🤖",
