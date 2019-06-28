@@ -6,7 +6,7 @@ const {
     RichEmbed
 } = discord;
 
-const {runGame} = require('../game.js');
+const { runGame } = require('../game.js');
 
 module.exports = {
     name: ['start', 'startgame', 'game', 'newgame', 'new'],
@@ -17,14 +17,14 @@ module.exports = {
         var config = JSON.parse(fs.readFileSync(`./guilds/${message.guild.id}.json`))
         config.opposite_day = false
         fs.writeFileSync(`./guilds/${message.guild.id}.json`, JSON.stringify(config))
-        if(words.length < 2){
+        if (words.length < 2) {
             channel.send(`Include a channel! (${words[0]} #[channelname])`)
             return
         }
 
         let channel = client.channels.get(words[1].slice(2).slice(0, -1))
 
-        if(!channel){
+        if (!channel) {
             channel.send(`Thats not a valid channel!`)
             return
         }
@@ -45,14 +45,14 @@ module.exports = {
             let collected = await msg.awaitReactions(() => true, {
                 time: 10000
             })
-            
+
             /*if(collected.size < 2){
                 channel.send('**Game canceled!** Not enough players!')
                 return
             }*/ //add this back in final release
             channel.send(`**Starting game with ${collected.size} players!**`)
             let players = []
-            for(let reaction of collected.array()){
+            for (let reaction of collected.array()) {
                 let users = await reaction.fetchUsers()
                 players = players.concat(users.array())
             }

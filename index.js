@@ -10,8 +10,6 @@ const client = new Client();
 
 const config = JSON.parse(fs.readFileSync('config.json'));
 
-const prefix = config.prefix //idk
-
 //command stuff
 client.commands = new discord.Collection()
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
@@ -30,9 +28,15 @@ console.log(`Loaded ${commandFiles.length} commands and ${client.commands.array(
 
 client.on('message', message => {
     // if config creation failed, we can still make it here
+    var guildConfig = config.default_settings;
     fs.open(`./guilds/${message.guild.id}.json`, 'r', (err, fd) => {
-        if (err) fs.writeFileSync(`./guilds/${message.guild.id}.json`, JSON.stringify(config.default_settings))
+        if (err) {
+            fs.writeFileSync(`./guilds/${message.guild.id}.json`, JSON.stringify(config.default_settings))
+            guildConfig = config.default_settings;
+        }
+        else guildConfig = JSON.parse(fs.readFileSync(`./guilds/${message.guild.id}.json`))
     })
+    const prefix = guildConfig.prefix
     let content = message.content
     if (!content.startsWith(prefix)) return
     let words = content.split(' ')

@@ -1,8 +1,15 @@
 {
     "token": "",
-    "prefix": "!",
     "default_settings": {
-        "opposite_day": false,
+        "prefix": "!",
+        "minigames": {
+            "dontWrite": true,
+            "react": true,
+            "solveEquation": true,
+            "write": true,
+            "writeSpecific": true,
+            "oppositeDay": true
+        },
         "fakeStarts": [
             "Alright,",
             "Okay,",
@@ -19,21 +26,19 @@
                 "boom",
                 "beep boop",
                 "i love this bot",
-                "this is the best game i have ever participated in"
+                "this is the best game i have ever participated in",
+                "you are cool"
             ],
             "react": [
                 "thumbs_up"
-            ],
-            "nickname": [
-                "simon",
-                "best person"
             ],
             "status": [
                 "online",
                 "idle",
                 "dnd",
                 "offline"
-            ]
+            ],
+            "opposite_day": false
         }
     }
 }
