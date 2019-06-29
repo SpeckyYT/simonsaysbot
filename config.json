@@ -1,5 +1,5 @@
 {
-    "token": "",
+    "token": "NTkzMTU3MzY4OTA1MjAzNzM3.XRaefA.bt6rOQhEgwPEdfOaRZAyKopDnLQ",
     "default_settings": {
         "config_permission": [
 
@@ -17,7 +17,8 @@
             "writeSpecific": true,
             "oppositeDay": true,
             "writeDM": true,
-            "writeDMSpecific": true
+            "writeDMSpecific": true,
+            "status": true
         },
         "fakeStarts": [
             "Alright,",

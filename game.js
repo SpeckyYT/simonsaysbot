@@ -28,11 +28,11 @@ module.exports.runGame = async function (channel, players_, client) {
             return
         }
         let currentGame  = enabledGames[getRandomInt(enabledGames.length)]
-        console.log(currentGame.name)
+        
         while(currentGame == lastGame){
             currentGame = enabledGames[getRandomInt(enabledGames.length)]
         }
-        console.log(config.opposite_day)
+        
         //picks a random start of startmessage (67% chance of getting "Simon says")
         let start
         if (currentGame.name == 'oppositeDay') {
