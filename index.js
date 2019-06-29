@@ -35,11 +35,12 @@ client.on('message', message => {
         if (err) {
             fs.writeFileSync(`./guilds/${message.guild.id}.json`, JSON.stringify(config.default_settings))
             guildConfig = config.default_settings;
+            guildConfig["config_permission"].push(message.guild.ownerID)
+            guildConfig["start_permission"].push(message.guild.ownerID)
         }
         
         else guildConfig = JSON.parse(fs.readFileSync(`./guilds/${message.guild.id}.json`))
-        guildConfig["config_permission"].push(message.guild.ownerID)
-        guildConfig["start_permission"].push(message.guild.ownerID)
+        
 
         const prefix = guildConfig.prefix
         let content = message.content
