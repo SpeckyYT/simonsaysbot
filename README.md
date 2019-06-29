@@ -7,6 +7,7 @@ Created by: `Manteex#6804`, `SputNix#6119`.
 [Invite the bot to your server here!](https://discordapp.com/oauth2/authorize?client_id=594319995526184981&scope=bot&permissions=8)
 
 **Or, to run it locally:**
+
 Insert your bot's token in the `token` property of `config.json`. You're ready to start! The default prefix for the bot is `!` (but you can change that using `!config prefix set <prefix>`).
 
 Type `!start` to start the game, you will be guided through everything else by the bot itself.
