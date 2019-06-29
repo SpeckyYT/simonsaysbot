@@ -48,12 +48,12 @@ client.on('message', message => {
 
         if (cmd) {
             console.log(message.author.username + " (" + message.channel.type + ") " + ": " + message.content)
-            //try {
+            try {
             cmd.execute(client, message, words)
-            //} catch (error) {
-            //    message.channel.send("**ERROR: **" + error).then(msg => msg.delete(10000))
-            //    console.log("**ERROR: **" + error)
-            //}
+            } catch (error) {
+                message.channel.send("**ERROR: **" + error).then(msg => msg.delete(10000))
+                console.log("**ERROR: **" + error)
+            }
         }
     })
 })
