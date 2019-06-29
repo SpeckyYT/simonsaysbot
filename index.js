@@ -69,15 +69,16 @@ client.on('ready', () => {
 client.on('guildCreate', guild => {
     var guildConfig = config.default_settings
     
-    fs.open(`./guilds/${message.guild.id}.json`, 'r', (err, fd) => {
+    fs.open(`./guilds/${guild.id}.json`, 'r', (err, fd) => {
         if (err) {
-            fs.writeFileSync(`./guilds/${message.guild.id}.json`, JSON.stringify(config.default_settings))
-            guildConfig = config.default_settings;
+            fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(config.default_settings))
         }
-        else guildConfig = JSON.parse(fs.readFileSync(`./guilds/${message.guild.id}.json`))
+        else guildConfig = JSON.parse(fs.readFileSync(`./guilds/${guild.id}.json`))
     })
-    guildConfig["config_permission"].push(guild.ownerID)
-    guildConfig["start_permissions"].push(guild.ownerID)
+    
+    guildConfig.config_permission.push(guild.ownerID)
+    guildConfig.start_permission.push(guild.ownerID)
+    fs.writeFileSync(`./guilds/${guild.id}.json`, JSON.stringify(guildConfig))
 })
 
 //loading minigames
