@@ -23,7 +23,7 @@ module.exports = {
         let outIndex = []
         //check each player to see if they are out
         players.forEach((player, i) => {
-            console.log(player.presence.status, status)
+            
             if(player.presence.status == status){
                 if(!info.simonSaid){
                     out.push(player)

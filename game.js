@@ -79,8 +79,9 @@ module.exports.runGame = async function (channel, players_, client) {
         channel.send(embed)
 
         await sleep(1000)
+        
 
-        if (playersLeft.length < 1) {
+        if (playersLeft.length == 0) {
             winners = playersOut
             gameOn = false
             break
