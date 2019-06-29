@@ -30,14 +30,16 @@ client.on('message', message => {
     // if config creation failed, we can still make it here
     if(message.channel.type == 'dm') return
     var guildConfig = config.default_settings
-    guildConfig["config_permission"].push(message.guild.ownerID)
-    guildConfig["start_permission"].push(message.guild.ownerID)
+    
     fs.open(`./guilds/${message.guild.id}.json`, 'r', (err, fd) => {
         if (err) {
             fs.writeFileSync(`./guilds/${message.guild.id}.json`, JSON.stringify(config.default_settings))
             guildConfig = config.default_settings;
         }
+        
         else guildConfig = JSON.parse(fs.readFileSync(`./guilds/${message.guild.id}.json`))
+        guildConfig["config_permission"].push(message.guild.ownerID)
+        guildConfig["start_permission"].push(message.guild.ownerID)
 
         const prefix = guildConfig.prefix
         let content = message.content
@@ -65,8 +67,7 @@ client.on('ready', () => {
 // make config file when joined new guild
 client.on('guildCreate', guild => {
     var guildConfig = config.default_settings
-    guildConfig["config_permission"].push(guild.ownerID)
-    guildConfig["start_permissions"].push(guild.ownerID)
+    
     fs.open(`./guilds/${message.guild.id}.json`, 'r', (err, fd) => {
         if (err) {
             fs.writeFileSync(`./guilds/${message.guild.id}.json`, JSON.stringify(config.default_settings))
@@ -74,6 +75,8 @@ client.on('guildCreate', guild => {
         }
         else guildConfig = JSON.parse(fs.readFileSync(`./guilds/${message.guild.id}.json`))
     })
+    guildConfig["config_permission"].push(guild.ownerID)
+    guildConfig["start_permissions"].push(guild.ownerID)
 })
 
 //loading minigames
