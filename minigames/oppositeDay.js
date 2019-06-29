@@ -19,7 +19,7 @@ module.exports = {
         //when time is up
         await sleep(time)
 
-        if (!config.opposite_day) await channel.send('Simon says time\'s up! We\'re ready to start the opposite day! \n *From now and until opposite day ends, do the opposite of what you would normally do to stay in the game!*')
+        if (!config.opposite_day) await channel.send('Simon says time\'s up! We\'re ready to start the opposite day! \n **From now and until opposite day ends, do the opposite of what you would normally do to stay in the game!**')
         else await channel.send('Alright time\'s up! We\'ve ended the opposite day!')
 
         collector.stop()
@@ -42,11 +42,7 @@ module.exports = {
                 outIndex.push(i)
             }
         })
-        outIndex.sort((a, b) => b - a);
-        let newPlayers = players
-        outIndex.forEach((i) => {
-            newPlayers.splice(i)
-        })
+        let newPlayers = players.filter( ( el ) => !out.includes( el ) )
 
         config.opposite_day = !config.opposite_day
         

@@ -58,10 +58,10 @@ module.exports = {
                 time: time
             })
 
-            if(collected.size < 2){
+            /*if(collected.size < 2){
                 channel.send('**Game canceled!** Not enough players!')
                 return
-            }
+            }*/
             
             let players = []
             for (let reaction of collected.array()) {

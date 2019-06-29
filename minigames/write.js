@@ -48,11 +48,7 @@ module.exports = {
                 outIndex.push(i)
             }
         })
-        outIndex.sort((a, b) => b - a);
-        let newPlayers = players
-        outIndex.forEach((i) => {
-            newPlayers.splice(i)
-        })
+        let newPlayers = players.filter( ( el ) => !out.includes( el ) )
         return ({
             playersOut: out,
             playersLeft: newPlayers,

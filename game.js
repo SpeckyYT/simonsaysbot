@@ -52,7 +52,8 @@ module.exports.runGame = async function (channel, players_, client) {
         //sends startmessage
         const startMessage = await channel.send(`**${start.string} ${currentGame.startMessage.toLowerCase()}** *(You have ${Math.floor(actualTime / 1000)} seconds)*`)
         //runs the game
-
+        console.log(currentGame.name)
+        
         let {
             playersOut,
             playersLeft,
@@ -77,7 +78,7 @@ module.exports.runGame = async function (channel, players_, client) {
         }
 
         channel.send(embed)
-
+        console.log('Players still in: ' + playersLeft.map(user => user.username).join(', '))
         await sleep(1000)
         
 
@@ -107,6 +108,6 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-Number.prototype.clamp = function (min, max) {
+Number.prototype.clamp = function (min, max) { 
     return Math.min(Math.max(this, min), max);
 };
