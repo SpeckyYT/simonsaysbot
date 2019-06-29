@@ -65,7 +65,7 @@ module.exports.runGame = async function (channel, players_, client) {
         config = configOut
 
         await sleep(1000)
-
+        playersOut = [...new Set(playersOut)]
         //say whos out
         var embed = new discord.RichEmbed()
         if (playersOut.length > 0) {
