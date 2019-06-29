@@ -6,7 +6,8 @@ Created by: `Manteex#6804`, `SputNix#6119`.
 ## Installation and use
 [Invite the bot to your server here!](https://discordapp.com/oauth2/authorize?client_id=594319995526184981&scope=bot&permissions=8)
 
-**Or, to run it locally:**
+**Or, run it locally:**
+To run the bot, you need [Node.js](https://nodejs.org/en/) and the [discord.js](https://discord.js.org/#/) module installed.
 
 Insert your bot's token in the `token` property of `config.json`. You're ready to start! The default prefix for the bot is `!` (but you can change that using `!config prefix set <prefix>`).
 
