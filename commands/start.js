@@ -21,33 +21,38 @@ module.exports = {
             message.reply(`You don't have permissions to use this command!`)
             return
         }
-        if (words.length < 2) {
+        
+        /*if (words.length < 2) {
             message.reply(`Include a channel! (${words[0]} #[channelname])`)
             return
-        }
+        }*/
 
-        let channel = client.channels.get(words[1].slice(2).slice(0, -1))
+        let channel = message.mentions.channels.first()
 
+        var time;
+    
         if (!channel) {
-            message.reply(`That's not a valid channel!`)
-            return
-        }
-        let time = words[2] ? parseInt(words[2]) * 1000 : 60000
-        if (!time){
-            message.reply('The time must be an integer of seconds.')
-            return
-        }
-
-        if (channel) {
-            message.channel.send(`Starting game in ${channel}!`)
+            channel = message.channel;
+            time = words[1] ? parseInt(args[1], 10) * 1000 : 30000
         } else {
-            message.reply(`${words[1]} is not a valid channel`)
+            time = args[2] ? parseInt(args[2], 10) * 1000 : 30000
+            if(!time){
+                time = args[1] ? parseInt(args[1], 10) * 1000 : 30000
+            }
+        }
+    
+        if (!time){
+            message.reply('the time must be an integer of seconds.')
             return
+        }
+    
+        if (channel != message.channel) {
+            message.channel.send(`Starting game in ${channel}!`)
         }
 
         //collect players
 
-        let startembed = new RichEmbed().setTitle("REACT TO THIS MESSAGE TO JOIN SIMON SAYS!")
+        let startembed = new RichEmbed().setTitle("REACT TO THIS MESSAGE WITH 🎲 TO JOIN SIMON SAYS!")
         .setDescription(`Hosted by <@${message.author.id}>`)
         .setColor(message.member.displayColor)
         .setFooter(`The game will start in ${Math.floor(time / 1000)} seconds.`)
@@ -65,8 +70,10 @@ module.exports = {
             
             let players = []
             for (let reaction of collected.array()) {
-                let users = await reaction.fetchUsers()
-                players = players.concat(users.array())
+                if(reaction.emoji.name == '🎲'){
+                    let users = await reaction.fetchUsers()
+                    players = players.concat(users.array())
+                }
             }
             players = players.filter(player => player.id != client.user.id)
 
