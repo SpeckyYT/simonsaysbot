@@ -33,11 +33,11 @@ module.exports = {
     
         if (!channel) {
             channel = message.channel;
-            time = words[1] ? parseInt(args[1], 10) * 1000 : 30000
+            time = words[1] ? parseInt(args[1], 10) * 1000 : 60000
         } else {
-            time = args[2] ? parseInt(args[2], 10) * 1000 : 30000
+            time = args[2] ? parseInt(args[2], 10) * 1000 : 60000
             if(!time){
-                time = args[1] ? parseInt(args[1], 10) * 1000 : 30000
+                time = args[1] ? parseInt(args[1], 10) * 1000 : 60000
             }
         }
     
